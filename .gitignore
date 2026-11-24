@@ -1,0 +1,14 @@
+/node_modules/
+/.next/
+/out/
+/coverage/
+/next-env.d.ts
+*.tsbuildinfo
+*.swp
+*.swo
+*~
+.env*
+!.env.example
+.DS_Store
+.vercel/
+/context/

@@ -1,0 +1,18 @@
+services:
+  web:
+    build: .
+    init: true
+    ports:
+      - "127.0.0.1:${PORTFOLIO_PORT:-3000}:3000"
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /home/node/portfolio
+          ignore:
+            - package.json
+            - package-lock.json
+        - action: rebuild
+          path: package.json
+        - action: rebuild
+          path: package-lock.json
