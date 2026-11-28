@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ResizableNavbar } from "@/components/ui/resizable-navbar";
-import { approach, caseStudies, profile, services, stack } from "@/lib/portfolio";
+import { approach, caseStudies, profile, services, siteUrl, stack } from "@/lib/portfolio";
 
 const navigation = [
   { label: "Services", href: "#services" },
@@ -31,9 +31,27 @@ const socialProfiles = [
   { label: "X", href: profile.x, Icon: IconBrandX },
 ];
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: profile.name,
+  url: siteUrl.href,
+  publisher: {
+    "@type": "Person",
+    name: profile.name,
+    jobTitle: profile.role,
+    url: siteUrl.href,
+    sameAs: socialProfiles.map(({ href }) => href),
+  },
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
+      />
       <a className="skip-link" href="#main">Skip to content</a>
       <ResizableNavbar
         links={navigation}
@@ -71,7 +89,7 @@ export default function Home() {
                   <span className="block text-primary">Beyond localhost.</span>
                 </h1>
                 <p className="mt-4 max-w-[43ch] text-base leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg">
-                  I’m Rifki. I help small teams deploy, maintain, and troubleshoot
+                  I’m {profile.name}. I help small teams deploy, maintain, and troubleshoot
                   PHP applications and the Linux systems they run on.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2.5 sm:mt-7">
@@ -187,7 +205,7 @@ export default function Home() {
                 <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary/10">
                   <Mail className="size-5" aria-hidden="true" />
                 </span>
-                <span className="select-all">{profile.email}</span>
+                <span className="select-all" data-nosnippet="">{profile.email}</span>
               </a>
               <nav aria-label="Social profiles" className="flex justify-center gap-3">
                 {socialProfiles.map(({ label, href, Icon }) => (
@@ -204,7 +222,7 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-border">
-        <div className="page-frame flex flex-wrap items-center justify-between gap-2 py-4 text-sm text-muted-foreground">
+        <div className="page-frame flex flex-wrap items-center justify-between gap-2 py-4 text-sm text-muted-foreground" data-nosnippet="">
           <p>{profile.name} <span className="mx-1">·</span> Indonesia</p>
           <a href={`mailto:${profile.email}`} className="inline-flex min-h-11 items-center rounded underline underline-offset-4 hover:text-primary">
             {profile.email}

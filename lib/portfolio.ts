@@ -1,8 +1,10 @@
+export const siteUrl = new URL(process.env.SITE_URL || "https://rifkimadhani.web.id/");
+
 export const profile = {
   name: "Rifki Madhani",
   role: "Backend & Systems Developer",
   description:
-    "Rifki Madhani, a backend & systems developer, helps small teams deploy, maintain, and troubleshoot PHP applications and Linux-hosted services.",
+    "Rifki Madhani is a backend and systems developer in Indonesia. Explore his work with PHP, Laravel, CodeIgniter, and Linux deployment and troubleshooting.",
   email: "hi@rifkimadhani.web.id",
   linkedin: "https://www.linkedin.com/in/rifkimadhani",
   github: "https://github.com/rifkimadhani",

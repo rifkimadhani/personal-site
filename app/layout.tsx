@@ -4,16 +4,13 @@ import type { ReactNode } from "react";
 import "@fontsource-variable/geist/wght.css";
 import "@fontsource-variable/geist-mono/wght.css";
 
-import { profile } from "@/lib/portfolio";
+import { profile, siteUrl } from "@/lib/portfolio";
 import "./globals.css";
 
 const title = `${profile.name} — ${profile.role}`;
-const siteUrl = process.env.SITE_URL;
 const basePath = process.env.SITE_BASE_PATH ?? "";
-const metadataBase = siteUrl ? new URL(siteUrl) : undefined;
-const socialImage = metadataBase
-  ? new URL(`${basePath}/social-card.png`, metadataBase.origin)
-  : undefined;
+const faviconPath = `${basePath}/favicon`;
+const socialImage = new URL(`${basePath}/social-card.png`, siteUrl);
 
 export const metadata: Metadata = {
   title,
@@ -21,28 +18,30 @@ export const metadata: Metadata = {
   authors: [{ name: profile.name }],
   icons: {
     icon: [
-      { url: `${basePath}/icon.svg`, sizes: "any", type: "image/svg+xml" },
-      { url: `${basePath}/favicon-32.png`, sizes: "32x32", type: "image/png" },
+      { url: `${faviconPath}/android-chrome-192x192.png`, sizes: "192x192", type: "image/png" },
+      { url: `${faviconPath}/favicon.ico`, sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { url: `${faviconPath}/favicon-16x16.png`, sizes: "16x16", type: "image/png" },
+      { url: `${faviconPath}/favicon-32x32.png`, sizes: "32x32", type: "image/png" },
     ],
-    apple: { url: `${basePath}/apple-touch-icon.png`, sizes: "180x180" },
+    apple: { url: `${faviconPath}/apple-touch-icon.png`, sizes: "180x180", type: "image/png" },
   },
-  ...(siteUrl && {
-    metadataBase,
-    alternates: { canonical: siteUrl },
-  }),
+  manifest: `${faviconPath}/site.webmanifest`,
+  metadataBase: siteUrl,
+  alternates: { canonical: siteUrl },
   openGraph: {
     title,
     description: profile.description,
     type: "website",
     locale: "en_US",
-    ...(siteUrl && { url: siteUrl }),
-    ...(socialImage && { images: [{ url: socialImage, width: 1200, height: 630, alt: title }] }),
+    url: siteUrl,
+    siteName: profile.name,
+    images: [{ url: socialImage, width: 1200, height: 630, alt: title }],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description: profile.description,
-    ...(socialImage && { images: [socialImage] }),
+    images: [socialImage],
   },
 };
 
